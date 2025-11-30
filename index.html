@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Samuel Adeniyi — Portfolio</title>
+  <meta name="description" content="Samuel Adeniyi — student, maker, mentor. Projects, achievements, and contact." />
+  <meta name="theme-color" content="#071033" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    /* FUTURISTIC THEME + MICRO-INTERACTIONS
+       - Dual theme via data-theme attribute
+       - Smooth transitions and small motion on hover/focus
+       - Subtle animated background + tilt micro-interaction on hero card
+    */
+
+    :root{
+      --bg: #05060a;
+      --panel: rgba(255,255,255,0.03);
+      --muted: #9aa4b2;
+      --text: #e6eef8;
+      --accent: #00ffdd;
+      --accent-2: #3aa4ff;
+      --glass-border: rgba(255,255,255,0.06);
+      --radius: 14px;
+      --card-elevation: 0 8px 24px rgba(2,10,30,0.6);
+      --transition-fast: 180ms;
+      --transition-medium: 320ms;
+      --focus-ring: 0 0 0 4px rgba(0,255,221,0.08);
+    }
+
+    /* Light theme overrides */
+    :root[data-theme="light"]{
+      --bg: linear-gradient(180deg,#f7fbff,#eef6ff);
+      --panel: rgba(4,12,30,0.03);
+      --muted: #3b4654;
+      --text: #061025;
+      --accent: #0066ff;
+      --accent-2: #00c7b7;
+      --glass-border: rgba(2,10,30,0.04);
+      --card-elevation: 0 8px 22px rgba(10,20,40,0.06);
+      --focus-ring: 0 0 0 4px rgba(0,102,255,0.08);
+    }
+
+    /* Base */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.45;min-height:100vh;padding-bottom:4rem;transition:background var(--transition-medium) ease,color var(--transition-medium) ease}
+    .container{max-width:1100px;margin:0 auto;padding:1.25rem}
+
+    /* Header */
+    .site-header{position:sticky;top:0;backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(0,0,0,0.12), transparent);border-bottom:1px solid var(--glass-border);z-index:40;transition:background var(--transition-medium)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .brand{font-family:Orbitron,Inter;font-weight:700;color:var(--accent);text-decoration:none;font-size:1.05rem;letter-spacing:0.6px}
+    nav.nav ul{display:flex;gap:0.75rem;list-style:none;margin:0;padding:0}
+    nav.nav a{color:var(--muted);text-decoration:none;padding:0.45rem 0.6rem;border-radius:8px;font-weight:600;font-size:.95rem;transition:transform var(--transition-fast), color var(--transition-fast), background var(--transition-fast)}
+    nav.nav a:hover{color:var(--text);transform:translateY(-3px);background:linear-gradient(90deg, rgba(0,255,221,0.04), rgba(0,116,255,0.02))}
+    nav.nav a:focus{outline:none;box-shadow:var(--focus-ring);border-radius:8px}
+
+    .header-actions{display:flex;gap:0.5rem}
+    .btn-icon{background:transparent;border:1px solid var(--glass-border);color:var(--muted);padding:0.45rem;border-radius:10px;cursor:pointer;transition:transform var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast)}
+    .btn-icon:hover{transform:translateY(-3px);color:var(--accent);box-shadow:var(--card-elevation)}
+    .btn-icon:active{transform:translateY(-1px) scale(.99)}
+    .mobile-only{display:none}
+
+    /* Hero */
+    .hero{position:relative;padding:3.5rem 0 2rem;overflow:visible}
+    .hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0;mix-blend-mode:screen;opacity:.06}
+    .hero-grid{position:relative;display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start;z-index:1}
+    .hero-title{font-family:Orbitron,Inter;font-size:2.05rem;margin:0 0 .5rem;color:var(--text);transition:transform var(--transition-medium)}
+    .accent{color:var(--accent);text-shadow:0 6px 18px rgba(0,255,221,0.06)}
+    .lead{color:var(--muted);margin:0 0 1rem}
+    .meta{color:var(--muted);font-size:.95rem;margin-bottom:1rem}
+    .hero-ctas{display:flex;gap:.75rem}
+    .btn{display:inline-block;padding:.6rem 1rem;border-radius:10px;text-decoration:none;font-weight:700;cursor:pointer;transition:transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast)}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#031229;box-shadow:0 8px 24px rgba(2,10,30,0.45);border:0}
+    .btn-primary:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 14px 40px rgba(2,10,30,0.55)}
+    .btn-primary:active{transform:translateY(-2px) scale(.995)}
+    .btn-outline{border:1px solid var(--glass-border);color:var(--muted);background:transparent}
+    .btn-outline:hover{transform:translateY(-3px);color:var(--text);border-color:var(--accent)}
+
+    /* Card */
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass-border);padding:1.15rem;border-radius:var(--radius);backdrop-filter:blur(8px);transition:transform var(--transition-medium), box-shadow var(--transition-medium);will-change:transform}
+    .hero-card:hover{transform:translateY(-8px);box-shadow:var(--card-elevation)}
+    .avatar{width:72px;height:72px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#021223;font-family:Orbitron;margin-bottom:0.75rem;transition:transform var(--transition-medium)}
+    .avatar:hover{transform:rotate(-6deg) scale(1.02)}
+    .hero-stats{list-style:none;padding:0;margin:0 0 0.75rem;display:grid;grid-template-columns:1fr;gap:.45rem}
+    .hero-stats li{display:flex;justify-content:space-between;color:var(--muted);font-weight:600}
+    .social{display:flex;gap:.5rem;margin-top:.6rem}
+    .social-link{padding:.45rem .6rem;border-radius:8px;background:transparent;color:var(--muted);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:.5rem;transition:transform var(--transition-fast), background var(--transition-fast), color var(--transition-fast)}
+    .social-link:hover{transform:translateY(-4px) scale(1.03);color:var(--text);background:linear-gradient(90deg, rgba(0,255,221,0.04), rgba(0,116,255,0.02))}
+    .social-link .badge{display:inline-block;font-size:.85rem;padding:.25rem .5rem;border-radius:8px;background:rgba(255,255,255,0.02)}
+
+    /* Sections */
+    section.container{margin-top:2rem}
+    h2{font-family:Orbitron;margin:0 0 .75rem;color:var(--accent)}
+    .small{font-size:.95rem;color:var(--muted)}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+    .card{background:var(--panel);border:1px solid var(--glass-border);padding:1rem;border-radius:12px;transition:transform var(--transition-medium), box-shadow var(--transition-medium);will-change:transform}
+    .card:hover{transform:translateY(-6px);box-shadow:var(--card-elevation)}
+    .card h3{margin-top:0}
+    .achievement-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem}
+
+    .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:1rem}
+    .contact-form label{display:block;margin-bottom:.6rem}
+    input,textarea{width:100%;padding:.6rem;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;transition:box-shadow var(--transition-fast), border-color var(--transition-fast)}
+    input:focus, textarea:focus{outline:none;box-shadow:var(--focus-ring);border-color:var(--accent)}
+    .form-actions{display:flex;gap:.5rem;margin-top:.5rem}
+
+    footer.site-footer{margin-top:3rem;padding:1.25rem 0;color:var(--muted);border-top:1px solid rgba(255,255,255,0.02)}
+    .footer-nav a{color:var(--muted);text-decoration:none;margin-left:.75rem;transition:color var(--transition-fast)}
+    .footer-nav a:hover{color:var(--accent)}
+
+    /* Micro-interaction helpers */
+    .pulse { animation: pulse 3.5s ease-in-out infinite; }
+    @keyframes pulse {
+      0%{opacity:.06; transform:translateY(0px)}
+      50%{opacity:.1; transform:translateY(-6px)}
+      100%{opacity:.06; transform:translateY(0px)}
+    }
+
+    /* subtle floating background shapes */
+    .hero::before, .hero::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      filter:blur(80px);
+      opacity:.08;
+      pointer-events:none;
+    }
+    .hero::before{width:520px;height:520px;left:-8%;top:-20%;background:linear-gradient(45deg,var(--accent),transparent);animation:floatA 12s linear infinite}
+    .hero::after{width:420px;height:420px;right:-6%;bottom:-10%;background:linear-gradient(45deg,var(--accent-2),transparent);animation:floatB 14s linear infinite}
+    @keyframes floatA {0%{transform:translateY(0)}50%{transform:translateY(12px)}100%{transform:translateY(0)}}
+    @keyframes floatB {0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
+
+    /* Responsive */
+    @media(min-width:1200px){.hero-title{font-size:2.6rem}}
+    @media(max-width:880px){
+      .hero-grid{grid-template-columns:1fr}
+      nav.nav{display:none}
+      .mobile-only{display:inline-block}
+      .contact-grid{grid-template-columns:1fr}
+      .hero::before,.hero::after{display:none}
+    }
+
+    /* Accessibility: visible focus */
+    :focus-visible{outline:none;box-shadow:var(--focus-ring);border-radius:8px}
+  </style>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="Samuel Adeniyi homepage">SAMUEL • ADENIYI</a>
+
+      <nav class="nav" id="nav" aria-label="Primary navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#achievements">Achievements</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn-icon" aria-pressed="false" aria-label="Toggle dark and light theme">🌓</button>
+        <button id="menu-toggle" class="btn-icon mobile-only" aria-expanded="false" aria-controls="nav" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home" aria-label="Introduction">
+      <div class="container hero-grid" role="region">
+        <div class="hero-content">
+          <h1 class="hero-title">Hi — I'm <span class="accent">Samuel</span></h1>
+          <p class="lead">High school innovator building web tools, exploring CS fundamentals, and leading community efforts with tech-forward thinking.</p>
+          <p class="meta"><strong>School:</strong> Skyline High School · <strong>Grad:</strong> June 2028</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#achievements" title="See achievements">Explore achievements</a>
+            <a class="btn btn-outline" href="mailto:adeniyisamire@outlook.com" title="Send email">Email</a>
+          </div>
+          <div style="margin-top:.9rem;color:var(--muted)"><em>Open to mentorship, local projects, and volunteer opportunities.</em></div>
+        </div>
+
+        <aside class="hero-card" aria-labelledby="profile-summary" role="complementary">
+          <div id="profile-summary" style="display:flex;align-items:center;gap:0.75rem">
+            <div class="avatar" aria-hidden="true">SA</div>
+            <div>
+              <div style="font-weight:700">Samuel Adeniyi</div>
+              <div style="color:var(--muted);font-size:.9rem">Student • Builder • Mentor</div>
+            </div>
+          </div>
+
+          <ul class="hero-stats" aria-hidden="false" style="margin-top:1rem">
+            <li><strong>GPA</strong><span>3.957</span></li>
+            <li><strong>Enrolled</strong><span>Skyline HS</span></li>
+            <li><strong>Activities</strong><span>Robotics · Music · ASB</span></li>
+          </ul>
+
+          <p class="small" style="margin-top:.6rem">High school portfolio — available for local collaboration and mentorship.</p>
+
+          <div class="social" role="navigation" aria-label="Social links">
+            <!-- Only Instagram per request -->
+            <a class="social-link" href="https://www.instagram.com/your_instagram_handle" target="_blank" rel="noopener" aria-label="Instagram">
+              <span class="badge">IG</span>
+              <span style="font-weight:700">Instagram</span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="container about" id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading">About me</h2>
+      <p class="small" style="max-width:70ch">
+        I am a dedicated Skyline High School student focused on web development, robotics, music, and community service.
+        I maintain a GPA of <strong>3.957</strong> and enjoy building small apps, leading outreach, and mentoring younger students.
+      </p>
+
+      <div class="cards" style="margin-top:1rem">
+        <article class="card" aria-labelledby="edu">
+          <h3 id="edu">Education</h3>
+          <p><strong>Skyline High School</strong> — Sammamish, WA (Expected Graduation: June 2028)</p>
+          <p>Current GPA: <strong>3.957</strong>.</p>
+          <p><strong>Pine Lake Middle School</strong> — Graduated June 2024 (Honor Society; graduation speaker)</p>
+        </article>
+
+        <article class="card" aria-labelledby="interests">
+          <h3 id="interests">Interests</h3>
+          <p>Web development, robotics, music (piano & choir), renewable energy, mentoring peers.</p>
+        </article>
+
+        <article class="card" aria-labelledby="availability">
+          <h3 id="availability">Availability</h3>
+          <p>Open to local volunteer roles, mentorship, and small project collaborations. Message me to connect.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container achievements" id="achievements" aria-labelledby="achieve-heading">
+      <div class="section-head">
+        <h2 id="achieve-heading">Achievements</h2>
+        <p class="small muted">Honors, leadership, awards, and projects — tap any card to learn more.</p>
+      </div>
+
+      <div class="achievement-grid" role="list">
+        <article class="card achievement-card" role="listitem">
+          <h3>Skyline High School — Current Student</h3>
+          <p class="muted">Expected Graduation: June 2028</p>
+          <p>Strong academic performance across subjects; currently maintain a GPA of 3.957.</p>
+          <div class="card-actions"><a class="btn btn-outline" href="projects/skyline-high-school.html">Learn more</a></div>
+        </article>
+
+        <article class="card achievement-card" role="listitem">
+          <h3>Pine Lake Middle School — Alumni</h3>
+          <p class="muted">Graduated: June 2024</p>
+          <p>Honor Society, graduation speaker, and leadership roles.</p>
+          <div class="card-actions"><a class="btn btn-outline" href="projects/pine-lake-middle-school.html">Learn more</a></div>
+        </article>
+
+        <article class="card achievement-card" role="listitem">
+          <h3>ASB — Director of Communications</h3>
+          <p class="muted">Elected 2026</p>
+          <p>Managed communications, advertising, and engagement for the student body.</p>
+          <div class="card-actions"><a class="btn btn-outline" href="projects/asb-director-communications.html">Learn more</a></div>
+        </article>
+
+        <article class="card achievement-card" role="listitem">
+          <h3>Robotics Club (2976)</h3>
+          <p class="muted">Build & outreach teams</p>
+          <p>Contributed to build, electronics, and outreach leading to competitive participation.</p>
+          <div class="card-actions"><a class="btn btn-outline" href="projects/robotics-club.html">Learn more</a></div>
+        </article>
+
+        <article class="card achievement-card" role="listitem">
+          <h3>Music — Piano & Choir</h3>
+          <p class="muted">Performer & award winner</p>
+          <p>Active musician with national recognition in music clubs.</p>
+          <div class="card-actions"><a class="btn btn-outline" href="projects/music-awards.html">Learn more</a></div>
+        </article>
+
+        <article class="card achievement-card" role="listitem">
+          <h3>Solar Power Electricity Passion Project</h3>
+          <p class="muted">Independent</p>
+          <p>Led a solar energy project in Nigeria to provide electricity to households and inspire local adoption.</p>
+          <div class="card-actions"><a class="btn btn-outline" href="projects/solar-energy-project.html">Learn more</a></div>
+        </article>
+      </div>
+
+      <div style="margin-top:1rem">
+        <a class="btn btn-primary" href="projects/index.html">See all achievements</a>
+      </div>
+    </section>
+
+    <section class="container contact" id="contact" aria-labelledby="contact-heading" style="margin-top:2rem">
+      <h2 id="contact-heading">Contact</h2>
+      <div class="contact-grid">
+        <form class="contact-form card" action="mailto:adeniyisamire@outlook.com" method="post" enctype="text/plain" aria-label="Contact form">
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" required placeholder="Your name">
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" required placeholder="you@example.com">
+          </label>
+          <label>
+            <span>Message</span>
+            <textarea name="message" rows="6" required placeholder="Brief message and availability"></textarea>
+          </label>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Send</button>
+            <button class="btn btn-outline" type="button" id="copy-email">Copy email</button>
+          </div>
+        </form>
+
+        <aside class="contact-info card" aria-labelledby="work-with-me">
+          <h3 id="work-with-me">Let's work together</h3>
+          <p>Email: <a href="mailto:adeniyisamire@outlook.com">adeniyisamire@outlook.com</a></p>
+          <p>Resume: <a href="resume.pdf" target="_blank" rel="noopener">Download PDF</a> (add resume.pdf to the repo)</p>
+          <p class="small">For a quick chat, include your availability and I'll reply.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <p style="margin:0">© <span id="year"></span> Samuel Adeniyi — Innovator • Creator • Change-maker</p>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#privacy">Privacy</a>
+        <a href="#credits">Credits</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // THEME + MICRO-INTERACTIONS SCRIPT
+    (function () {
+      // Elements
+      const root = document.documentElement;
+      const themeToggle = document.getElementById('theme-toggle');
+      const menuToggle = document.getElementById('menu-toggle');
+      const nav = document.getElementById('nav');
+      const copyBtn = document.getElementById('copy-email');
+      const heroCard = document.querySelector('.hero-card');
+
+      // Initialize year
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Theme: choose from saved, or prefers-color-scheme, else dark
+      function getInitialTheme() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') return saved;
+        const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        return prefersLight ? 'light' : 'dark';
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        themeToggle.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+        themeToggle.textContent = theme === 'light' ? '🌤️' : '🌙';
+      }
+
+      // Set initial
+      const initial = getInitialTheme();
+      applyTheme(initial);
+
+      // Toggle handler
+      themeToggle.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        const next = current === 'light' ? 'dark' : 'light';
+        localStorage.setItem('theme', next);
+        // smooth color transition
+        root.style.transition = 'background 260ms ease, color 260ms ease';
+        applyTheme(next);
+        // remove inline transition after it finishes so other changes aren't affected
+        setTimeout(()=> root.style.transition = '', 300);
+      });
+
+      // Mobile menu toggle
+      if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => {
+          const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+          menuToggle.setAttribute('aria-expanded', String(!expanded));
+          nav.style.display = expanded ? 'none' : 'block';
+        });
+      }
+
+      // Copy email
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          const email = 'adeniyisamire@outlook.com';
+          try {
+            await navigator.clipboard.writeText(email);
+            const original = copyBtn.textContent;
+            copyBtn.textContent = 'Copied ✓';
+            copyBtn.disabled = true;
+            setTimeout(() => { copyBtn.textContent = original; copyBtn.disabled = false; }, 1400);
+          } catch (e) {
+            // fallback
+            window.prompt('Copy email:', email);
+          }
+        });
+      }
+
+      // Micro-interaction: subtle tilt on hero card for non-touch devices
+      function isTouchDevice() {
+        return (('ontouchstart' in window) || navigator.maxTouchPoints > 0);
+      }
+
+      if (heroCard && !isTouchDevice()) {
+        const rect = () => heroCard.getBoundingClientRect();
+        heroCard.style.transformStyle = 'preserve-3d';
+        heroCard.addEventListener('pointermove', (e) => {
+          const r = rect();
+          const cx = r.left + r.width / 2;
+          const cy = r.top + r.height / 2;
+          const dx = (e.clientX - cx) / r.width;
+          const dy = (e.clientY - cy) / r.height;
+          const rx = (-dy * 6).toFixed(2);
+          const ry = (dx * 8).toFixed(2);
+          heroCard.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+        });
+
+        heroCard.addEventListener('pointerleave', () => {
+          heroCard.style.transform = '';
+        });
+      }
+
+      // Small accessibility: keyboard toggle via Enter/Space on theme button
+      themeToggle.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); themeToggle.click(); }
+      });
+    })();
+  </script>
+</body>
+</html>
